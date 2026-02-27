@@ -1,0 +1,61 @@
+@startuml
+' ========================
+' Classes
+' ========================
+
+class Enrolment {
+  - id : int
+  - internalMark : Double
+  - examMark : Double
+  - finalGrade : char
+}
+
+class Student {
+  - id : int
+  - name : String
+}
+
+class Address {
+  - id : int
+  - name : String
+}
+
+class CourseModule {
+  - code : String
+  - name : String
+  - semester : int
+  - credits : int
+}
+
+class ElectiveModule {
+  - deptName : String
+}
+
+class CompulsoryModule {
+}
+
+' ========================
+' Inheritance
+' ========================
+
+ElectiveModule --|> CourseModule
+CompulsoryModule --|> CourseModule
+
+' ========================
+' Associations
+' ========================
+
+' Student lives at Address (1-to-1)
+Student "1" -- "1" Address : lives-at
+
+' Student enrolls in CourseModule
+Student "*" --> "0..30" CourseModule : enrols-in
+
+' ========================
+' Association Class
+' ========================
+
+' Enrolment is an association class attached to the
+' Student–CourseModule association
+(Student, CourseModule) .. Enrolment : enrolments
+@enduml
