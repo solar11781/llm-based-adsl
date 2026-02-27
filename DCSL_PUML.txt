@@ -1,0 +1,101 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Class
+
+class DClass {
+  mutable : Boolean = true
+}
+
+class Field
+class Method
+class Parameter
+
+class DAttr {
+  mutable  : Boolean = true
+  optional : Boolean = true
+  length   : Integer = -1
+  unique   : Boolean = false
+  id       : Boolean = false
+  auto     : Boolean = false
+  min      : Double = -∞
+  max      : Double = +∞
+}
+
+class DAssoc {
+  ascName   : String
+  role      : String
+  ascType   : AssocType
+  endType   : AssocEndType
+  associate : Associate
+}
+
+class Associate {
+  type    : Class
+  cardMin : Integer
+  cardMax : Integer
+}
+
+class AttrRef {
+  value : String
+}
+
+class DOpt {
+  type     : OptType
+  requires : String
+  effects  : String
+}
+
+enum OptType <<enumeration>> {
+  RequiredConstructor
+  ObjectFormConstructor
+  AutoAttributeValueGen
+  LinkCountGetter
+  LinkCountSetter
+  LinkAdder
+  LinkAdderNew
+  LinkRemover
+  LinkUpdater
+  Setter
+  Getter
+}
+
+enum AssocType <<enumeration>> {
+  OneOne
+  OneMany
+  ManyMany
+}
+
+enum AssocEndType <<enumeration>> {
+  One
+  Many
+}
+
+' Compositions from Class
+Class "1" *-- "*" Field  : fields
+Class "1" *-- "*" Method : methods
+
+' Class <-> DClass (diagram shows 1..1; label ambiguity: cls/dcl)
+Class "1" --> "1" DClass : dcl
+' (uncertain end-role label near Class: "cls")
+
+' Field relationships (diagram shows 1..1)
+Field "1" --> "1" DAttr  : atr
+Method "1" --> "1" DAttr  : atr
+' (uncertain opposite end-role label near Field: "field")
+
+Field "1" --> "1" DAssoc : asc
+' (uncertain opposite end-role label near Field likely "field")
+
+
+
+' Method owns Parameters
+Method "1" *-- "*" Parameter : params
+
+' Method options (1 method to many opts)
+Method "1" --> "*" DOpt : opt
+
+' References to AttrRef
+Method    "1" --> "1" AttrRef : method
+Parameter "1" --> "1" AttrRef : ref
+@enduml
