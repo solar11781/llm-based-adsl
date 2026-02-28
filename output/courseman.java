@@ -507,7 +507,7 @@ class Enrolment {
   // [INFERRED] id treated as identifier + auto.
 
   @DAttr(mutable=true, optional=false) // [TRACE] Enrolment.internalMark : Double
-  private Double internalMark;
+  private Double internalMark; // TODO: Bổ sung min, max
 
   @DAttr(mutable=true, optional=false) // [TRACE] Enrolment.examMark : Double
   private Double examMark;
