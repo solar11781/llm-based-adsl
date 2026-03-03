@@ -1,0 +1,111 @@
+@startuml
+class Edge
+
+class Tree
+
+class Node {
+  dclass : Class
+}
+
+class RootNode {
+  stateScope : String
+}
+
+class ModuleConfig {
+  name : String
+  type : ModuleType
+}
+
+class RegionConfig {
+  name : String
+  label : Label
+  imageIcon : String
+  style : Style
+  displayClass : Class
+  alignX : AlignmentX
+  alignY : AlignmentY
+  width : int
+  height : int
+}
+
+class DataFieldConfig {
+  clazz : Class
+  boundAttrs : String
+}
+
+class ModelConfig {
+  domainClass : Class
+  editable : boolean
+}
+
+class ControllerConfig {
+  ctrlClass : Class
+  dataCtrl : Class
+  defaultCommand : LAName
+  openPolicy : OpenPolicy
+}
+
+class ViewConfig {
+  topX : int
+  topY : int
+}
+
+class ViewFieldConfig
+class SubviewConfig
+
+class ScopeConfig {
+  stateScope : String
+}
+
+class PropertySet
+class Property
+
+' =========================
+' Inheritance
+' =========================
+RootNode --|> Node
+ViewFieldConfig --|> RegionConfig
+SubviewConfig --|> ViewFieldConfig
+ViewConfig --|> RegionConfig
+DataFieldConfig --|> ViewFieldConfig
+
+' =========================
+' Tree structure
+' =========================
+Tree "1" -- "1" RootNode : root
+Tree *-- Node : nodes
+Tree *-- Edge : edges
+Edge "1" -- "1" Node : parent
+Edge "1" -- "1" Node : child
+ModuleConfig "1" -- "0..1" Tree : contTree
+
+' =========================
+' Module structure
+' =========================
+ModuleConfig "0..1" -- "1" ModelConfig : model
+ModuleConfig "0..1 module" -- "1 ctl" ControllerConfig
+ModuleConfig "0..1" -- "1" ViewConfig : view
+
+' =========================
+' Scope relations
+' =========================
+ModelConfig "0..1 custModel" -- "1 scope" ScopeConfig
+ControllerConfig "0..1 custCtl" -- "scope" ScopeConfig
+Edge "edge" -- "0..1" ScopeConfig
+ModelConfig "1" -- "0..1" PropertySet
+ControllerConfig "1" -- "0..1" PropertySet
+
+' =========================
+' View structure
+' =========================
+ViewConfig "view" *-- "fldCfg *" ViewFieldConfig
+SubviewConfig *-- "custFldCfg *" ViewFieldConfig
+SubviewConfig "0..1 custView" -- "1" ScopeConfig
+
+' =========================
+' Property structure
+' =========================
+ScopeConfig "1" -- "0..1" PropertySet
+PropertySet *-- Property
+PropertySet "0..1" -- "1" RegionConfig
+@enduml

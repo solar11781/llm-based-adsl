@@ -1,0 +1,79 @@
+@startuml
+class ActivityGraph
+class Edge
+class Node {
+label: String [1]
+}
+class ControlNode
+class MergeNode
+class ForkNode
+class CoordinatorNode
+class DecisionNode
+class JoinNode
+class ModuleAct {
+preStates: State [1..*]
+postStates: State [1..*]
+}
+class Module
+class ModuleService
+class DomainClass
+
+enum State {
+Init
+Opened
+Created
+NewObject
+Updated
+Reset
+Cancelled
+Editing
+Deleted
+}
+
+'======================
+' Generalization
+'======================
+MergeNode --|> ControlNode
+ForkNode --|> ControlNode
+CoordinatorNode --|> ControlNode
+DecisionNode --|> ControlNode
+JoinNode --|> ControlNode
+ControlNode --|> Node
+
+'======================
+' Associations
+'======================
+
+ActivityGraph "1" -- "1..*" Edge : edges
+ActivityGraph "1" -- "2..*" Node : nodes
+ActivityGraph "1" -- "1..*" Node : n0
+
+Edge "*" -- "1" Node : hasSrc  n1
+Edge "*" -- "1" Node : n2
+
+Node "1..*" -- "0..1" DomainClass : refCls
+
+Node "0..1" -- "*" ModuleAct : actSeq
+
+Module "*" -- "*" ModuleAct : mAct
+
+Module "*" -- "*" ModuleService : mService
+
+Module "1" *-- "1" DomainClass
+
+'======================
+' Notes / Constraints
+'======================
+
+note right of ActivityGraph
+context ActivityGraph inv :
+not(nodes.oclIsUndefined())
+and nodes -> size() >= 2
+end note
+
+note right of Node
+context Node inv :
+not (refCls.oclIsUndefined ())
+implies refCls.isDomainClass()
+end note
+@enduml
