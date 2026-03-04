@@ -2,19 +2,21 @@ from pathlib import Path
 
 class PromptBuilder:
     def __init__(self, template_path: str):
-        self.template = Path(template_path).read_text()
+        self.template = Path(template_path).read_text(encoding="utf-8")
 
     def build(
         self,
         domain_puml_path: str,
-        metamodel_puml_path: str,
+        metamodel_puml_path: str, 
         requirements_path: str = None
     ) -> str:
-        domain_puml    = self._load(domain_puml_path)
+        domain_puml  = self._load(domain_puml_path)
         metamodel_puml = self._load(metamodel_puml_path)
-        requirements   = self._load(requirements_path) if requirements_path else "Not provided."
+        # dcsl_puml    = self._load(dcsl_path)
+        # mccl_puml    = self._load(mccl_path)
+        # agl_puml     = self._load(agl_path)
+        requirements = self._load(requirements_path) if requirements_path else "Not provided."
 
-        # Slot into the exact placeholder the template expects at the bottom
         file_block = (
             f"- Domain PUML: {domain_puml_path}\n{domain_puml}\n\n"
             f"- Meta-model PUML: {metamodel_puml_path}\n{metamodel_puml}\n\n"
@@ -31,7 +33,8 @@ class PromptBuilder:
 
     def _load(self, path: str) -> str:
         return Path(path).read_text(encoding="utf-8")
-    
+
+
 # Example Use:
 # from app.prompts.prompt_builder import PromptBuilder
 
@@ -42,7 +45,9 @@ class PromptBuilder:
 # # We'll use AGL_PUML as your first implemented aDSL scale-up.
 # final_prompt = builder.build(
 #     domain_puml_path="tests/sample_inputs/courseman.puml",
-#     metamodel_puml_path="meta_models/AGL_PUML.puml",
+#     dcsl_path="meta_models/DCSL_PUML.puml",
+#     mccl_path="meta_models/MCCL_PUML.puml",
+#     agl_path="meta_models/AGL_PUML.puml",
 #     requirements_path=None  # Optional, can be omitted if not needed
 # )
 

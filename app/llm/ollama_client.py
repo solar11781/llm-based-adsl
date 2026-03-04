@@ -2,9 +2,10 @@ import requests
 from app.config import Config
 
 class OllamaClient:
-    def __init__(self, config: Config):
+    def __init__(self, llm, config: Config):
         self.url = f"{config.OLLAMA_URL}/api/generate"
-        self.model = config.OLLAMA_MODEL
+        # self.model = config.OLLAMA_MODEL
+        self.model = llm
         self.temperature = config.TEMPERATURE
 
     def generate(self, prompt: str) -> str:
@@ -33,7 +34,7 @@ class OllamaClient:
             )
         except requests.exceptions.Timeout:
             raise RuntimeError(
-                "Ollama timed out. The model may be too slow — try gemma:2b instead."
+                "Ollama timed out. The model may be too slow"
             )
         except requests.exceptions.HTTPError as e:
             raise RuntimeError(f"Ollama returned an error: {e.response.status_code} {e.response.text}")
