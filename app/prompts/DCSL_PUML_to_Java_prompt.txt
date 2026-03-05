@@ -20,25 +20,25 @@ OUTPUT FORMAT (must be exact):
 
 /* FILE: <source file path> */
 
-<java codes with annotations derived from all input files>
+<java codes with annotations derived from ALL input files>
 
 // ----------------------------------------
 
 /* FILE: <source file path> */
 
-<java codes with annotations derived from all input files>
+<java codes with annotations derived from ALL input files>
 
 For example:
 
 /* FILE: project/be/test1.java */
 
-<java codes with annotations derived from BOTH PUML files>
+<java codes with annotations derived from ALL input files>
 
 // ----------------------------------------
 
 /* FILE: project/be/test2.java */
 
-<java codes with annotations derived from all input files>
+<java codes with annotations derived from ALL input files>
 
 - After each FILE section comment, include a package statement ONLY if the Domain PUML explicitly specifies a package for the types in that logical file section; otherwise omit the package statement.
 - Never output more than one package statement per logical file section.
