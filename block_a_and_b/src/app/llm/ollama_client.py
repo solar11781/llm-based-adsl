@@ -1,4 +1,5 @@
 import requests
+import json
 from app.config import Config
 
 class OllamaClient:
@@ -8,7 +9,7 @@ class OllamaClient:
         self.model = llm
         self.temperature = config.TEMPERATURE
 
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, stream: bool = False):
         print(f"Sending prompt to Ollama ({self.model})...")
         
         try:
@@ -17,7 +18,7 @@ class OllamaClient:
                 json={
                     "model": self.model,
                     "prompt": prompt,
-                    "stream": False,
+                    "stream": stream,
                     "options": {
                         "temperature": self.temperature,
                         "num_predict": 4096,
@@ -26,7 +27,16 @@ class OllamaClient:
                 timeout=300
             )
             response.raise_for_status()
-            return response.json()["response"]
+
+            if stream:
+                for line in response.iter_lines():
+                    if line:
+                        data = json.loads(line.decode("utf-8"))
+                        if "response" in data:
+                            yield data["response"]
+            else:
+                return response.json()["response"]
+
 
         except requests.exceptions.ConnectionError:
             raise RuntimeError(

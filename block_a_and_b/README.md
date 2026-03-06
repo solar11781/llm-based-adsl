@@ -3,9 +3,11 @@
 > CLI Python app that uses a local Gemma (Ollama) LLM to generate Java project code from a user-supplied domain PUML, guided by your aDSL PUML template.
 
 ---
+
 ## Our Swinburne Software Lab:
+
 Principal Investigator: Dr. Le Minh Duc  
-Lab Supervisor: Nguyen Van Cong, MSc  
+Lab Supervisor: Nguyen Van Cong, MSc
 
 AI Team Members:  
 Bui Tran Gia Bao: Swinburne Hanoi (Graduated)  
@@ -13,6 +15,7 @@ Nguyen Ha Khue: Swinburne HCM
 Nguyen Duc Manh: Swinburne Hanoi
 
 ---
+
 ## Project Structure
 
 ```
@@ -56,17 +59,21 @@ domain.puml ──► DomainParser  ──┐
                                 ├──► PromptBuilder ──► OllamaClient ──► ResponseParser ──► FileWriter
 adsl_layer1.puml ──► aDSLParser ┘
 ```
+
 ---
 
 ## How To Run:
 
 For now the app only generates Java OOP code in DCSL syntax.  
 Later we will implement MCCL and AGL into the prompt template.  
-To run, first make sure Ollama is running and you change the model name inside config.py. Then run:  
+To run, first make sure Ollama is running and you change the model name inside config.py. Then run:
+
 ```
-python cli.py --domain ./tests/sample_inputs/courseman.puml --metamodel dcsl --llm [your Ollama LLM model, example: qwen2.5-coder:3b]
+python cli.py --domain .input/domain/courseman.puml --metamodel dcsl --llm [your Ollama LLM model, example: qwen2.5-coder:3b]
 ```
+
 Example output:
+
 ```
 Using metamodel: dcsl → ./meta_models/DCSL_PUML.puml
 Building prompt...
@@ -74,4 +81,5 @@ Sending prompt to Ollama (qwen2.5-coder:3b)...
 wrote → output\generated.java
 Done → ./output
 ```
+
 The generated code will land in **output/**
