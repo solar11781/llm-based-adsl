@@ -1,8 +1,8 @@
 import argparse
-from app.config import config
+from block_a_and_b.src.app.config import config
 from block_a_and_b.src.app.prompt_builder import PromptBuilder
-from app.llm.ollama_client import OllamaClient
-from app.generator.filewriter import FileWriter
+from block_a_and_b.src.app.llm.ollama_client import OllamaClient
+from block_a_and_b.src.app.generator.filewriter import FileWriter
 
 METAMODEL_MAP = {
     "dcsl": config.DCSL_PATH,
@@ -33,7 +33,7 @@ def main():
 
     # 2. Call Ollama
     response = ""
-    for chunk in OllamaClient(args.llm, config).generate(prompt, stream=True):
+    for chunk in OllamaClient(args.llm, config).generate(prompt):
         token = chunk
         print(token, end="", flush=True)
         response += token

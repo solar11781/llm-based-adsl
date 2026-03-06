@@ -69,7 +69,7 @@ Later we will implement MCCL and AGL into the prompt template.
 To run, first make sure Ollama is running and you change the model name inside config.py. Then run:
 
 ```
-python cli.py --domain .input/domain/courseman.puml --metamodel dcsl --llm [your Ollama LLM model, example: qwen2.5-coder:3b]
+python -m block_a_and_b.src.cli --domain block_a_and_b/input/domain/courseman.puml --metamodel dcsl --llm [your Ollama LLM model, example: qwen2.5-coder:3b]
 ```
 
 Example output:
