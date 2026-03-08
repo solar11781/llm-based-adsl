@@ -1,6 +1,8 @@
+> Note: This project is no longer maintained here. Development has been moved to a private organization, and this repository will not receive further updates.
+
 # Java Code Generator — aDSL-Driven LLM App
 
-> CLI Python app that uses a local Gemma (Ollama) LLM to generate Java project code from a user-supplied domain PUML, guided by your aDSL PUML template.
+CLI Python app that uses a local Gemma (Ollama) LLM to generate Java project code from a user-supplied domain PUML, guided by your aDSL PUML template.
 
 ---
 ## Our Swinburne Software Lab:
